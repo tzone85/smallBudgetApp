@@ -1,0 +1,26 @@
+@startuml sequence_add_expense
+title Sequence — add expense
+
+skinparam shadowing false
+
+actor User
+participant "Expense form" as Form
+participant "ui.js" as UI
+participant "BudgetStore" as Store
+participant "LocalStorage\nadapter" as Storage
+database "localStorage" as LS
+
+User -> Form : submit (title, amount)
+Form -> UI : submit event
+UI -> Store : addExpense({title, amount})
+alt validation passes
+  Store -> Store : push expense, bump id
+  Store -> UI : subscribe callback(snapshot)
+  Store -> Storage : subscribe callback(snapshot)
+  Storage -> LS : setItem(KEY, JSON)
+  UI -> UI : re-render expense list +\nupdated totals/balance
+else validation fails
+  Store --> UI : {ok:false, error}
+  UI -> UI : show feedback alert
+end
+@enduml
