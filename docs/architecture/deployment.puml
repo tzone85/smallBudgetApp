@@ -1,0 +1,17 @@
+@startuml deployment
+title Deployment — static site
+
+skinparam shadowing false
+
+node "Browser" as browser {
+  [Vite-bundled SPA\n(index.html + JS + CSS)]
+  database "localStorage"
+}
+
+node "GitHub Pages\n(or any static host)" as gh {
+  folder "dist/" as dist
+}
+
+[Vite build] --> dist : npm run build
+dist --> [Vite-bundled SPA\n(index.html + JS + CSS)] : HTTP GET
+@enduml

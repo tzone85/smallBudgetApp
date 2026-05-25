@@ -1,0 +1,39 @@
+@startuml component
+title Nozzles Budget App — Component Architecture
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+actor User
+
+package "src/" {
+  [main.js\n(entrypoint)] as main
+  [BudgetStore\n(pure logic)] as store
+  [LocalStorage adapter\n(NullStorage in tests)] as storage
+  [ui.js\n(DOM bindings)] as ui
+}
+
+database "Browser\nlocalStorage" as ls
+
+User --> ui : clicks / forms
+ui --> store : setBudget / addExpense\n/ removeExpense / updateExpense
+store --> ui : subscribe(snapshot)
+main --> store : new BudgetStore()
+main --> storage : new LocalStorage(KEY)
+main --> ui : mount({store})
+store --> storage : subscribe → save(snapshot)
+storage --> ls : setItem / getItem
+
+note right of store
+  No DOM access.
+  Returns {ok, error?} from
+  every mutation. Validation
+  lives here.
+end note
+
+note right of ui
+  No business rules.
+  Just renders snapshots
+  + dispatches store calls.
+end note
+@enduml
