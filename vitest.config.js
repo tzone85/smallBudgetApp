@@ -8,7 +8,9 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.js"],
-      exclude: ["src/main.js"],
+      // ui.js is DOM-binding glue covered by Playwright e2e tests, not vitest.
+      // main.js is the entrypoint (composition).
+      exclude: ["src/main.js", "src/ui.js"],
       reporter: ["text", "html"],
       thresholds: {
         lines: 85,
