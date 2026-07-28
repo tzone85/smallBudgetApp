@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">smallBudgetApp architecture</title>
+  <desc id="desc">The classic app at the repo root (UI layer, BudgetStore, storage adapters, localStorage) next to the new revamp shell in web/ (index.html, tokens.css, base.css, tests). Features migrate from the classic app to the revamp in later stories.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4c5a69"/>
+    </marker>
+    <marker id="arrow-brand" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#146c43"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="620" fill="#f4f6f9"/>
+
+  <text x="460" y="42" text-anchor="middle" font-size="21" font-weight="700" fill="#1b2733">smallBudgetApp — architecture</text>
+  <text x="460" y="66" text-anchor="middle" font-size="13" fill="#4c5a69">Classic app and the new token-first revamp shell live side by side</text>
+
+  <!-- Classic app panel -->
+  <rect x="40" y="92" width="390" height="470" rx="10" fill="#ffffff" stroke="#d6dce4"/>
+  <text x="235" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#1b2733">Classic app — repo root</text>
+
+  <rect x="70" y="144" width="330" height="64" rx="8" fill="#f4f6f9" stroke="#d6dce4"/>
+  <text x="235" y="170" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">index.html + src/ui.js</text>
+  <text x="235" y="190" text-anchor="middle" font-size="12" fill="#4c5a69">thin DOM-binding layer</text>
+  <line x1="235" y1="208" x2="235" y2="244" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="70" y="248" width="330" height="64" rx="8" fill="#f4f6f9" stroke="#146c43"/>
+  <text x="235" y="274" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">src/budget-store.js</text>
+  <text x="235" y="294" text-anchor="middle" font-size="12" fill="#4c5a69">pure state — no DOM, no I/O</text>
+  <line x1="235" y1="312" x2="235" y2="348" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="70" y="352" width="330" height="64" rx="8" fill="#f4f6f9" stroke="#d6dce4"/>
+  <text x="235" y="378" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">src/storage.js</text>
+  <text x="235" y="398" text-anchor="middle" font-size="12" fill="#4c5a69">LocalStorage / NullStorage adapters</text>
+  <line x1="235" y1="416" x2="235" y2="452" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="70" y="456" width="330" height="56" rx="8" fill="#ffffff" stroke="#4c5a69" stroke-dasharray="5 4"/>
+  <text x="235" y="480" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">browser localStorage</text>
+  <text x="235" y="499" text-anchor="middle" font-size="12" fill="#4c5a69">data never leaves the browser</text>
+
+  <!-- Revamp panel -->
+  <rect x="490" y="92" width="390" height="470" rx="10" fill="#ffffff" stroke="#146c43" stroke-width="1.5"/>
+  <text x="685" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#0f5132">Revamp shell — web/ (new)</text>
+
+  <rect x="520" y="144" width="330" height="64" rx="8" fill="#f4f6f9" stroke="#d6dce4"/>
+  <text x="685" y="170" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">web/index.html</text>
+  <text x="685" y="190" text-anchor="middle" font-size="12" fill="#4c5a69">skip link + header / main / footer landmarks</text>
+  <line x1="685" y1="208" x2="685" y2="244" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="520" y="248" width="330" height="64" rx="8" fill="#f4f6f9" stroke="#146c43"/>
+  <text x="685" y="274" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">web/styles/tokens.css</text>
+  <text x="685" y="294" text-anchor="middle" font-size="12" fill="#4c5a69">palette, type scale, spacing, radius, focus ring</text>
+  <line x1="685" y1="312" x2="685" y2="348" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="520" y="352" width="330" height="64" rx="8" fill="#f4f6f9" stroke="#d6dce4"/>
+  <text x="685" y="378" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">web/styles/base.css</text>
+  <text x="685" y="398" text-anchor="middle" font-size="12" fill="#4c5a69">reset, shell layout, :focus-visible styles</text>
+
+  <rect x="520" y="456" width="330" height="56" rx="8" fill="#ffffff" stroke="#4c5a69" stroke-dasharray="5 4"/>
+  <text x="685" y="480" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">web/tests/</text>
+  <text x="685" y="499" text-anchor="middle" font-size="12" fill="#4c5a69">vitest: tokens exist, WCAG AA pairs, shell landmarks</text>
+
+  <!-- Migration arrow between panels -->
+  <line x1="430" y1="330" x2="490" y2="330" stroke="#146c43" stroke-width="2" marker-end="url(#arrow-brand)"/>
+  <text x="460" y="316" text-anchor="middle" font-size="12" font-weight="600" fill="#0f5132">later</text>
+  <text x="460" y="352" text-anchor="middle" font-size="12" font-weight="600" fill="#0f5132">stories</text>
+
+  <text x="460" y="596" text-anchor="middle" font-size="12" fill="#4c5a69">Features move from the classic app into web/ story by story; both build on the same BudgetStore.</text>
+</svg>

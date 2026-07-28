@@ -13,6 +13,24 @@ in `editExpense` and `deleteExpense` meant the balance never updated after eithe
 action). Rewritten with a pure `BudgetStore`, a swappable storage adapter,
 Vite bundling, Vitest, Playwright e2e, and CI.
 
+## The revamp (in progress)
+
+A new UI is being built in `web/`, next to the classic app — not on top of
+it. So far it ships the shell and the design system it stands on:
+
+- `web/styles/tokens.css` — every color, font, size, spacing step, radius,
+  and focus style as a CSS custom property. Components use tokens, never
+  raw values.
+- `web/index.html` + `web/styles/base.css` — the page shell: skip link,
+  header/main/footer landmarks, reset, `:focus-visible` styles.
+- `web/tests/` — vitest suites that fail the build if a required token goes
+  missing, a text/background pair drops below WCAG AA (4.5:1), or a focus
+  outline gets removed.
+
+Features migrate over story by story; both UIs share the same `BudgetStore`.
+The reasoning is written up in
+[ADR 0001](docs/adr/0001-parallel-revamp-in-web-with-token-first-css.md).
+
 ## Highlights
 
 - **Pure logic separated from the DOM** — `BudgetStore` returns `{ok, error?}`
@@ -29,6 +47,13 @@ Vite bundling, Vitest, Playwright e2e, and CI.
 
 ## Architecture
 
+### Overview
+
+![Architecture overview: the classic app at the repo root beside the new web/ revamp shell](docs/architecture.svg)
+
+The overview is a hand-authored SVG (`docs/architecture.svg`) — edit it
+directly; there is no generator. Decisions live in `docs/adr/`.
+
 ### Components
 
 ![Component diagram](docs/architecture/component.svg)
@@ -41,9 +66,9 @@ Vite bundling, Vitest, Playwright e2e, and CI.
 
 ![Deployment](docs/architecture/deployment.svg)
 
-Diagrams are PlantUML sources under `docs/architecture/*.puml`; rendered SVGs
-are checked in. Regenerate with `./scripts/render_diagrams.sh` (requires
-`plantuml` — `brew install plantuml`).
+The detail diagrams are PlantUML sources under `docs/architecture/*.puml`;
+rendered SVGs are checked in. Regenerate with `./scripts/render_diagrams.sh`
+(requires `plantuml` — `brew install plantuml`).
 
 ## Quick start
 
@@ -66,10 +91,17 @@ src/
 ├── storage.js       # LocalStorage + NullStorage adapters
 ├── ui.js            # thin DOM-binding layer
 └── styles/main.css
+web/
+├── index.html       # revamp shell
+├── styles/          # tokens.css + base.css
+└── tests/           # token, WCAG, and shell suites
 tests/
 ├── unit/            # vitest, happy-dom env
 └── e2e/             # playwright + chromium
-docs/architecture/   # PlantUML sources + rendered SVGs
+docs/
+├── architecture.svg # hand-authored overview diagram
+├── architecture/    # PlantUML sources + rendered SVGs
+└── adr/             # architecture decision records
 .github/workflows/ci.yml
 ```
 
