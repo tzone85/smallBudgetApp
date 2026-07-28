@@ -1,7 +1,7 @@
 # ADR 0001: Build the UI revamp in `web/` with token-first CSS
 
 Date: 2026-07-28
-Status: Accepted
+Status: Superseded by [ADR 0002](0002-fold-revamp-into-main-app.md)
 
 ## Context
 
