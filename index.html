@@ -3,70 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
   <title>Nozzles Budget App</title>
 </head>
 <body>
-  <main class="container-fluid">
-    <div class="row">
-      <div class="col-11 mx-auto pt-3">
-        <h3 class="text-uppercase mb-4">Nozzles budget app</h3>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-        <div class="row">
-          <section class="col-md-5 my-3">
-            <div class="budget-feedback alert alert-danger text-capitalize" role="alert"></div>
-            <form id="budget-form" class="budget-form">
-              <h5 class="text-capitalize"><label for="budget-input">please enter your budget</label></h5>
-              <div class="form-group mb-2">
-                <input type="number" min="0" step="1" class="form-control budget-input" id="budget-input" required>
-              </div>
-              <button type="submit" class="btn text-capitalize budget-submit" id="budget-submit">calculate</button>
-            </form>
-          </section>
-
-          <section class="col-md-7">
-            <div class="row my-3">
-              <div class="col-4 text-center mb-2">
-                <h6 class="text-uppercase info-title">budget</h6>
-                <h4 class="text-uppercase mt-2 budget" id="budget"><span data-currency></span><span id="budget-amount">0</span></h4>
-              </div>
-              <div class="col-4 text-center">
-                <h6 class="text-uppercase info-title">expenses</h6>
-                <h4 class="text-uppercase mt-2 expense" id="expense"><span data-currency></span><span id="expense-amount">0</span></h4>
-              </div>
-              <div class="col-4 text-center">
-                <h6 class="text-uppercase info-title">balance</h6>
-                <h4 class="text-uppercase mt-2 balance" id="balance"><span data-currency></span><span id="balance-amount">0</span></h4>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div class="row">
-          <section class="col-md-5 my-3">
-            <div class="expense-feedback alert alert-danger text-capitalize" role="alert"></div>
-            <form id="expense-form" class="expense-form">
-              <h5 class="text-capitalize"><label for="expense-input">please enter your expense</label></h5>
-              <div class="form-group mb-2">
-                <input type="text" class="form-control expense-input" id="expense-input" required>
-              </div>
-              <h5 class="text-capitalize"><label for="amount-input">please enter expense amount</label></h5>
-              <div class="form-group mb-2">
-                <input type="number" min="0" step="1" class="form-control expense-input" id="amount-input" required>
-              </div>
-              <button type="submit" class="btn text-capitalize expense-submit" id="expense-submit">add expense</button>
-            </form>
-          </section>
-
-          <section class="col-md-7 my-3">
-            <div id="expense-list" class="expense-list" aria-live="polite"></div>
-          </section>
-        </div>
-      </div>
+  <header class="app-header">
+    <h1 class="brand">Nozzles Budget</h1>
+    <div class="toolbar">
+      <label class="toolbar-field">
+        <span>Budget</span>
+        <select id="budget-select" aria-label="Active budget"></select>
+      </label>
+      <label class="toolbar-field">
+        <span>Month</span>
+        <input type="month" id="month-input" aria-label="Active month">
+      </label>
+      <button type="button" id="theme-toggle" class="btn btn--ghost" aria-pressed="false">Dark mode</button>
     </div>
+  </header>
+
+  <main id="main" class="app-main">
+    <section class="totals card" aria-label="Totals">
+      <div class="totals__item">
+        <h2 class="totals__label">Budget</h2>
+        <p class="totals__value"><span data-currency></span><span id="budget-amount">0</span></p>
+      </div>
+      <div class="totals__item">
+        <h2 class="totals__label">Expenses</h2>
+        <p class="totals__value"><span data-currency></span><span id="expense-amount">0</span></p>
+      </div>
+      <div class="totals__item">
+        <h2 class="totals__label">Balance</h2>
+        <p class="totals__value" id="balance"><span data-currency></span><span id="balance-amount">0</span></p>
+      </div>
+    </section>
+
+    <div class="columns">
+      <section class="card" aria-labelledby="budget-form-heading">
+        <h2 id="budget-form-heading">Monthly budget</h2>
+        <div class="budget-feedback feedback" role="alert"></div>
+        <form id="budget-form">
+          <label for="budget-input">Amount for this budget</label>
+          <input type="number" min="0" step="any" id="budget-input" required>
+          <button type="submit" class="btn" id="budget-submit">Set budget</button>
+        </form>
+
+        <h2 class="section-gap">Budgets</h2>
+        <div class="manage-feedback feedback" role="alert"></div>
+        <form id="budget-create-form">
+          <label for="new-budget-input">New budget name</label>
+          <input type="text" id="new-budget-input" required>
+          <button type="submit" class="btn" id="new-budget-submit">Create budget</button>
+        </form>
+        <button type="button" class="btn btn--danger" id="delete-budget-btn">Delete current budget</button>
+      </section>
+
+      <section class="card" aria-labelledby="category-heading">
+        <h2 id="category-heading">Categories</h2>
+        <div class="category-feedback feedback" role="alert"></div>
+        <form id="category-form">
+          <label for="category-name-input">Name</label>
+          <input type="text" id="category-name-input" required>
+          <label for="category-limit-input">Monthly limit (optional)</label>
+          <input type="number" min="0" step="any" id="category-limit-input">
+          <button type="submit" class="btn" id="category-submit">Add category</button>
+        </form>
+        <ul id="category-list" class="plain-list" aria-live="polite"></ul>
+      </section>
+    </div>
+
+    <div class="columns">
+      <section class="card" aria-labelledby="expense-heading">
+        <h2 id="expense-heading">Add expense</h2>
+        <div class="expense-feedback feedback" role="alert"></div>
+        <form id="expense-form">
+          <label for="expense-input">Title</label>
+          <input type="text" id="expense-input" required>
+          <label for="amount-input">Amount</label>
+          <input type="number" min="0" step="any" id="amount-input" required>
+          <label for="expense-category">Category</label>
+          <select id="expense-category"></select>
+          <label class="checkbox">
+            <input type="checkbox" id="expense-recurring">
+            Repeats every month
+          </label>
+          <button type="submit" class="btn" id="expense-submit">Add expense</button>
+        </form>
+
+        <h2 class="section-gap">Recurring</h2>
+        <ul id="recurring-list" class="plain-list" aria-live="polite"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="expense-list-heading">
+        <h2 id="expense-list-heading">This month</h2>
+        <div id="expense-list" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <section class="card" aria-labelledby="summary-heading">
+      <h2 id="summary-heading">Summary</h2>
+      <div id="summary"></div>
+      <button type="button" class="btn" id="export-csv">Export CSV</button>
+    </section>
   </main>
+
+  <footer class="app-footer">Amounts in ZAR. Data stays in your browser.</footer>
+
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>

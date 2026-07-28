@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">smallBudgetApp architecture</title>
+  <desc id="desc">One app. index.html and ui.js bind the DOM to a pure BudgetStore. The store uses csv.js for export; ui.js draws the summary with summary-svg.js. State persists through storage adapters into browser localStorage. Design tokens with a dark palette style everything.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4c5a69"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="560" fill="#f4f6f9"/>
+
+  <text x="460" y="42" text-anchor="middle" font-size="21" font-weight="700" fill="#1b2733">smallBudgetApp — architecture</text>
+  <text x="460" y="66" text-anchor="middle" font-size="13" fill="#4c5a69">One app: thin DOM layer over a pure store, pluggable persistence</text>
+
+  <!-- Main stack -->
+  <rect x="140" y="100" width="380" height="64" rx="8" fill="#ffffff" stroke="#d6dce4"/>
+  <text x="330" y="126" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">index.html + src/ui.js</text>
+  <text x="330" y="146" text-anchor="middle" font-size="12" fill="#4c5a69">renders snapshots, dispatches events — no business rules</text>
+  <line x1="330" y1="164" x2="330" y2="200" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="204" width="380" height="80" rx="8" fill="#f4f6f9" stroke="#146c43" stroke-width="1.5"/>
+  <text x="330" y="230" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">src/budget-store.js</text>
+  <text x="330" y="250" text-anchor="middle" font-size="12" fill="#4c5a69">pure state — budgets, months, categories, recurring</text>
+  <text x="330" y="268" text-anchor="middle" font-size="12" fill="#4c5a69">no DOM, no I/O, no Date</text>
+  <line x1="330" y1="284" x2="330" y2="320" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="324" width="380" height="64" rx="8" fill="#ffffff" stroke="#d6dce4"/>
+  <text x="330" y="350" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">src/storage.js</text>
+  <text x="330" y="370" text-anchor="middle" font-size="12" fill="#4c5a69">LocalStorage / NullStorage adapters — serialize() in, hydrate() out</text>
+  <line x1="330" y1="388" x2="330" y2="424" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="428" width="380" height="56" rx="8" fill="#ffffff" stroke="#4c5a69" stroke-dasharray="5 4"/>
+  <text x="330" y="452" text-anchor="middle" font-size="14" font-weight="600" fill="#1b2733">browser localStorage</text>
+  <text x="330" y="471" text-anchor="middle" font-size="12" fill="#4c5a69">data never leaves the browser</text>
+
+  <!-- Satellites -->
+  <rect x="600" y="100" width="280" height="60" rx="8" fill="#ffffff" stroke="#d6dce4"/>
+  <text x="740" y="124" text-anchor="middle" font-size="13" font-weight="600" fill="#1b2733">src/summary-svg.js</text>
+  <text x="740" y="143" text-anchor="middle" font-size="12" fill="#4c5a69">hand-drawn SVG bar chart, no libraries</text>
+  <line x1="600" y1="130" x2="524" y2="130" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="600" y="214" width="280" height="60" rx="8" fill="#ffffff" stroke="#d6dce4"/>
+  <text x="740" y="238" text-anchor="middle" font-size="13" font-weight="600" fill="#1b2733">src/csv.js</text>
+  <text x="740" y="257" text-anchor="middle" font-size="12" fill="#4c5a69">RFC 4180 export, formula-injection safe</text>
+  <line x1="600" y1="244" x2="524" y2="244" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="600" y="328" width="280" height="60" rx="8" fill="#ffffff" stroke="#d6dce4"/>
+  <text x="740" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="#1b2733">src/theme.js + styles/tokens.css</text>
+  <text x="740" y="371" text-anchor="middle" font-size="12" fill="#4c5a69">design tokens, dark palette on [data-theme]</text>
+  <line x1="600" y1="358" x2="524" y2="358" stroke="#4c5a69" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <text x="460" y="534" text-anchor="middle" font-size="12" fill="#4c5a69">ui.js draws the summary with summary-svg.js; the store uses csv.js for export; theme.js swaps the token palette.</text>
+</svg>
